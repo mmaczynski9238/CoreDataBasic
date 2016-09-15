@@ -10,30 +10,14 @@ import UIKit
 import CoreData
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     
     var appDel: AppDelegate = AppDelegate()
     var context: NSManagedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
     
     @IBAction func saveButton(sender: UIButton) {
-        let newString = NSEntityDescription.insertNewObjectForEntityForName("StringEntity", inManagedObjectContext: context) as NSManagedObject
-        newString.setValue(textField.text, forKey: "string")
-        
-        do {
-            try context.save()
-            
-            let currentText = textField.text
-            currentTextLabel.text = "Current Text: " + "\(currentText!)"
-            
-            let alert = UIAlertController(title: "Success", message: "Saved Successfully", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        } catch _ {
-            print("Error")
-        }
-        
-        
+        saveFunction()
     }
     
     
@@ -70,7 +54,33 @@ class ViewController: UIViewController {
     context = appDel.managedObjectContext
         
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+     saveFunction()
+        return true
+    }
 
+    
+    func saveFunction() {
+        
+        let newString = NSEntityDescription.insertNewObjectForEntityForName("StringEntity", inManagedObjectContext: context) as NSManagedObject
+        newString.setValue(textField.text, forKey: "string")
+        
+        do {
+            try context.save()
+            
+            let currentText = textField.text
+            currentTextLabel.text = "Current Text: " + "\(currentText!)"
+            
+            let alert = UIAlertController(title: "Success", message: nil, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        } catch _ {
+            print("Error")
+        }
+        
 
+        
+    }
 }
 
