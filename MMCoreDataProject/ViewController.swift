@@ -41,11 +41,12 @@ class ViewController: UIViewController {
         
         var results: [AnyObject]?
         
-        do {
+        do
+        {
             results = try context.executeFetchRequest(request)
         } catch _ {
             results = nil
-            print("Error: load")
+            print("Error: Didn't load")
         }
         
         if results?.count > 0 {
