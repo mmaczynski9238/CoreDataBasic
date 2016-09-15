@@ -23,7 +23,10 @@ class ViewController: UIViewController {
         do {
             try context.save()
             
-            let alert = UIAlertController(title: "Success", message: "Saved successfully", preferredStyle: .Alert)
+            let currentText = textField.text
+            currentTextLabel.text = "Current Text: " + "\(currentText!)"
+            
+            let alert = UIAlertController(title: "Success", message: "Saved Successfully", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         } catch _ {
@@ -56,6 +59,7 @@ class ViewController: UIViewController {
         
     }
     
+    @IBOutlet var currentTextLabel: UILabel!
     @IBOutlet var displayLabel: UILabel!
     @IBOutlet var textField: UITextField!
 
